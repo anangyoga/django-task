@@ -25,5 +25,5 @@ class NoteCreateView(View):
         title = request.POST.get("title")
         content = request.POST.get("content")
 
-        Note.objects.create(title=title, content=content)
+        Note.objects.create(title=title, content=content, user=request.user)
         return redirect("index")
