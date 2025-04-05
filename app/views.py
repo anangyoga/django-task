@@ -3,6 +3,8 @@ from django.shortcuts import redirect, render
 from django.views.generic import DetailView, ListView, View
 
 from .models import Note
+# from .methods import do_something
+from .tasks import task_do_something
 
 
 class NoteListView(ListView):
@@ -24,6 +26,11 @@ class NoteCreateView(View):
     def post(self, request):
         title = request.POST.get("title")
         content = request.POST.get("content")
+
+        # do_something() | when this one is used, it takes 10 seconds to post Note
+
+        # the function below runs on the background
+        task_do_something()
 
         Note.objects.create(title=title, content=content, user=request.user)
         return redirect("index")
